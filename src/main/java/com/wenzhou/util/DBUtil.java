@@ -32,8 +32,13 @@ public class DBUtil {
      */
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            if (conn == null) {
+                System.out.println("Error: Failed to create database connection.");
+            }
+            return conn;
         } catch (SQLException e) {
+            System.err.println("DB Connection Error: " + e.getMessage());
             e.printStackTrace();
             return null;
         }

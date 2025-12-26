@@ -11,11 +11,15 @@ public class User {
     private String phone;
     private String role;
     private String imagePath;
+    // New fields
+    private String address;
+    private String realName;
 
     public User() {
     }
 
-    public User(int id, String username, String password, String email, String phone, String role, String imagePath) {
+    public User(int id, String username, String password, String email, String phone, String role, String imagePath,
+            String address, String realName) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -23,6 +27,8 @@ public class User {
         this.phone = phone;
         this.role = role;
         this.imagePath = imagePath;
+        this.address = address;
+        this.realName = realName;
     }
 
     public int getId() {
@@ -79,5 +85,21 @@ public class User {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

@@ -1,28 +1,29 @@
 package com.wenzhou.model;
 
-import java.util.Date;
-
 /**
  * 文化实体类 (Culture Model)
  */
 public class Culture {
     private int id;
-    private String title;
+    private String name;
+    private String type;
     private String description;
-    private Date eventDate;
-    private String location;
+    private String history;
     private String imagePath;
+    private String status;
 
     public Culture() {
     }
 
-    public Culture(int id, String title, String description, Date eventDate, String location, String imagePath) {
+    public Culture(int id, String name, String type, String description, String history, String imagePath,
+            String status) {
         this.id = id;
-        this.title = title;
+        this.name = name;
+        this.type = type;
         this.description = description;
-        this.eventDate = eventDate;
-        this.location = location;
+        this.history = history;
         this.imagePath = imagePath;
+        this.status = status;
     }
 
     public int getId() {
@@ -33,12 +34,20 @@ public class Culture {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getDescription() {
@@ -49,20 +58,12 @@ public class Culture {
         this.description = description;
     }
 
-    public Date getEventDate() {
-        return eventDate;
+    public String getHistory() {
+        return history;
     }
 
-    public void setEventDate(Date eventDate) {
-        this.eventDate = eventDate;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
+    public void setHistory(String history) {
+        this.history = history;
     }
 
     public String getImagePath() {
@@ -71,5 +72,13 @@ public class Culture {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

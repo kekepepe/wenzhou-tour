@@ -21,25 +21,33 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 设置编码
-        req.setCharacterEncoding("UTF-8");
+        try {
+            // 设置编码
+            req.setCharacterEncoding("UTF-8");
 
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");
 
-        User user = userDAO.login(username, password);
+            System.out.println("Login attempt: " + username); // Debug log
 
-        if (user != null) {
-            // 登录成功
-            HttpSession session = req.getSession();
-            session.setAttribute("user", user);
-            // 重定向到主页
-            resp.sendRedirect(req.getContextPath() + "/home.jsp");
-        } else {
-            // 登录失败
-            req.setAttribute("error", "用户名或密码错误 (Invalid Username or Password)");
-            // 转发回登录页
-            req.getRequestDispatcher("/index.jsp").forward(req, resp);
+            User user = userDAO.login(username, password);
+
+            if (user != null) {
+                // 登录成功
+                HttpSession session = req.getSession();
+                session.setAttribute("user", user);
+                // 重定向到主页
+                resp.sendRedirect(req.getContextPath() + "/home.jsp");
+            } else {
+                // 登录失败
+                req.setAttribute("error", "用户名或密码错误 (Invalid Username or Password)");
+                // 转发回登录页
+                req.getRequestDispatcher("/index.jsp").forward(req, resp);
+            }
+        } catch (Exception e) {
+            System.err.println("LoginServlet Error: " + e.getMessage());
+            e.printStackTrace();
+            throw new ServletException("Login failed due to server error", e);
         }
     }
 

@@ -7,48 +7,74 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 用户数据访问对象 (User DAO)
  */
-public class UserDAO {
+public class UserDAO extends BaseDAO<User> {
+
+    @Override
+    protected User mapResultSet(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setId(rs.getInt("id"));
+        user.setUsername(rs.getString("username"));
+        user.setPassword(rs.getString("password"));
+        user.setEmail(rs.getString("email"));
+        user.setPhone(rs.getString("phone"));
+        user.setRole(rs.getString("role"));
+        user.setImagePath(rs.getString("photo_path")); // Updated column name
+        user.setAddress(rs.getString("address")); // New field
+        user.setRealName(rs.getString("real_name")); // New field
+        return user;
+    }
+
+    public User login(String username, String password) {
+        String sql = "SELECT * FROM user_info WHERE username = ? AND password = ?";
+        return queryOne(sql, username, password);
+    }
 
     /**
-     * 用户登录验证
-     * 
-     * @param username 用户名
-     * @param password 密码
-     * @return 成功返回User对象，失败返回null
+     * 用户注册 (User Registration)
      */
-    public User login(String username, String password) {
+    public boolean registerUser(User user) {
         Connection conn = null;
         PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        User user = null;
-
         try {
             conn = DBUtil.getConnection();
-            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+            String sql = "INSERT INTO user_info (username, password, real_name, email, phone, address, photo_path, role) VALUES (?, ?, ?, ?, ?, ?, ?, 'user')";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            rs = pstmt.executeQuery();
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setString(3, user.getRealName());
+            pstmt.setString(4, user.getEmail());
+            pstmt.setString(5, user.getPhone());
+            pstmt.setString(6, user.getAddress());
+            pstmt.setString(7, user.getImagePath());
 
-            if (rs.next()) {
-                user = new User();
-                user.setId(rs.getInt("id"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setEmail(rs.getString("email"));
-                user.setPhone(rs.getString("phone"));
-                user.setRole(rs.getString("role"));
-                user.setImagePath(rs.getString("image_path"));
-            }
+            int rows = pstmt.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
+            System.err.println("Register Error: " + e.getMessage());
             e.printStackTrace();
+            return false;
         } finally {
-            DBUtil.close(conn, pstmt, rs);
+            DBUtil.close(conn, pstmt);
         }
-        return user;
+    }
+
+    public List<User> findAll() {
+        return queryList("SELECT * FROM user_info");
+    }
+
+    public boolean updateUser(User user) {
+        String sql = "UPDATE user_info SET email=?, phone=?, address=?, photo_path=?, real_name=? WHERE id=?";
+        return update(sql, user.getEmail(), user.getPhone(), user.getAddress(), user.getImagePath(), user.getRealName(),
+                user.getId());
+    }
+
+    public boolean delete(int id) {
+        return update("DELETE FROM user_info WHERE id = ?", id);
     }
 }
