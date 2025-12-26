@@ -1,56 +1,25 @@
+# --- Target & Build ---
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
-*.iml
-*.ipr
-
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+bin/
+out/
 
-### VS Code ###
-.vscode/
-
-### Mac OS ###
-.DS_Store
-
-
-# IDE files
+# --- IntelliJ IDEA ---
 .idea/
 *.iml
+*.iws
+*.ipr
+
+# --- Eclipse (为了你的队友) ---
 .settings/
 .project
 .classpath
 .factorypath
+.apt_generated/
 
-# Build folders
-target/
-build/
-bin/
-
-# OS files
+# --- OS Specific ---
 .DS_Store
 Thumbs.db
+
+# --- Log files ---
+*.log
