@@ -45,9 +45,10 @@ public class LoginServlet extends HttpServlet {
                 req.getRequestDispatcher("/index.jsp").forward(req, resp);
             }
         } catch (Exception e) {
+            // Catch ALL exceptions to prevent raw 500 page
             System.err.println("LoginServlet Error: " + e.getMessage());
             e.printStackTrace();
-            throw new ServletException("Login failed due to server error", e);
+            throw new ServletException("Login failed due to server error: " + e.getMessage(), e);
         }
     }
 

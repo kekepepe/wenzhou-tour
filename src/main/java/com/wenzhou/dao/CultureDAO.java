@@ -6,49 +6,44 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * 文化模块DAO (Culture DAO)
- * 对应表: hometown_culture
+ * 文化模块DAO
  */
 public class CultureDAO extends BaseDAO<Culture> {
 
     @Override
     protected Culture mapResultSet(ResultSet rs) throws SQLException {
-        Culture culture = new Culture();
-        culture.setId(rs.getInt("id"));
-        culture.setName(rs.getString("name")); // Model update needed: title -> name
-        culture.setType(rs.getString("type")); // Model update needed
-        culture.setDescription(rs.getString("description"));
-        culture.setHistory(rs.getString("history")); // Model update needed
-        culture.setImagePath(rs.getString("photo_path"));
-        culture.setStatus(rs.getString("status")); // Model update needed
-        return culture;
+        Culture c = new Culture();
+        c.setId(rs.getInt("id"));
+        c.setName(rs.getString("name"));
+        c.setType(rs.getString("type"));
+        c.setDescription(rs.getString("description"));
+        c.setHistory(rs.getString("history"));
+        c.setImagePath(rs.getString("photo_path"));
+        c.setStatus(rs.getString("status"));
+        return c;
     }
 
     public List<Culture> findAll() {
         return queryList("SELECT * FROM hometown_culture");
     }
 
-    public List<Culture> searchByName(String keyword) {
-        return queryList("SELECT * FROM hometown_culture WHERE name LIKE ?", "%" + keyword + "%");
+    public List<Culture> findByName(String name) {
+        return queryList("SELECT * FROM hometown_culture WHERE name LIKE ?", "%" + name + "%");
     }
 
-    public Culture findById(int id) {
-        return queryOne("SELECT * FROM hometown_culture WHERE id = ?", id);
-    }
-
-    public boolean add(Culture culture) {
+    public boolean add(Culture c) {
         String sql = "INSERT INTO hometown_culture (name, type, description, history, photo_path, status) VALUES (?, ?, ?, ?, ?, ?)";
-        return update(sql, culture.getName(), culture.getType(), culture.getDescription(), culture.getHistory(),
-                culture.getImagePath(), culture.getStatus());
+        return update(sql, c.getName(), c.getType(), c.getDescription(), c.getHistory(), c.getImagePath(),
+                c.getStatus());
     }
 
-    public boolean updateCulture(Culture culture) {
+    public boolean update(Culture c) {
         String sql = "UPDATE hometown_culture SET name=?, type=?, description=?, history=?, photo_path=?, status=? WHERE id=?";
-        return update(sql, culture.getName(), culture.getType(), culture.getDescription(), culture.getHistory(),
-                culture.getImagePath(), culture.getStatus(), culture.getId());
+        return update(sql, c.getName(), c.getType(), c.getDescription(), c.getHistory(), c.getImagePath(),
+                c.getStatus(), c.getId());
     }
 
     public boolean delete(int id) {
-        return update("DELETE FROM hometown_culture WHERE id = ?", id);
+        return update("DELETE FROM hometown_culture WHERE id=?", id);
     }
 }
