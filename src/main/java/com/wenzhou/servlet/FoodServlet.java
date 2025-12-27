@@ -24,7 +24,7 @@ public class FoodServlet extends BaseServlet {
         String keyword = req.getParameter("keyword");
         List<Food> list;
         if (keyword != null && !keyword.isEmpty()) {
-            list = foodDAO.searchByName(keyword);
+            list = foodDAO.findByName(keyword);
         } else {
             list = foodDAO.findAll();
         }

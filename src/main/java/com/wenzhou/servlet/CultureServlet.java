@@ -20,7 +20,7 @@ public class CultureServlet extends BaseServlet {
         String keyword = req.getParameter("keyword");
         List<Culture> list;
         if (keyword != null && !keyword.isEmpty()) {
-            list = cultureDAO.searchByName(keyword);
+            list = cultureDAO.findByName(keyword);
         } else {
             list = cultureDAO.findAll();
         }
@@ -47,7 +47,7 @@ public class CultureServlet extends BaseServlet {
 
         if (idStr != null && !idStr.isEmpty()) {
             culture.setId(Integer.parseInt(idStr));
-            cultureDAO.updateCulture(culture);
+            cultureDAO.update(culture);
         } else {
             cultureDAO.add(culture);
         }

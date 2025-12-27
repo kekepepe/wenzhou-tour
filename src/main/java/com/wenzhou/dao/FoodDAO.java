@@ -37,13 +37,17 @@ public class FoodDAO extends BaseDAO<Food> {
         return queryList("SELECT * FROM hometown_food WHERE name LIKE ?", "%" + name + "%");
     }
 
+    public Food findById(int id) {
+        return queryOne("SELECT * FROM hometown_food WHERE id = ?", id);
+    }
+
     public boolean add(Food food) {
         String sql = "INSERT INTO hometown_food (name, description, taste, history, photo_path) VALUES (?, ?, ?, ?, ?)";
         return update(sql, food.getName(), food.getDescription(), food.getTaste(), food.getHistory(),
                 food.getImagePath());
     }
 
-    public boolean update(Food food) {
+    public boolean updateFood(Food food) {
         String sql = "UPDATE hometown_food SET name=?, description=?, taste=?, history=?, photo_path=? WHERE id=?";
         return update(sql, food.getName(), food.getDescription(), food.getTaste(), food.getHistory(),
                 food.getImagePath(), food.getId());

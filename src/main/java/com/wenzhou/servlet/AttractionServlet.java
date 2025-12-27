@@ -21,7 +21,7 @@ public class AttractionServlet extends BaseServlet {
         String keyword = req.getParameter("keyword");
         List<Attraction> list;
         if (keyword != null && !keyword.isEmpty()) {
-            list = attractionDAO.searchByName(keyword);
+            list = attractionDAO.findByName(keyword);
         } else {
             list = attractionDAO.findAll();
         }
@@ -48,7 +48,7 @@ public class AttractionServlet extends BaseServlet {
 
         if (idStr != null && !idStr.isEmpty()) {
             attraction.setId(Integer.parseInt(idStr));
-            attractionDAO.updateAttraction(attraction);
+            attractionDAO.update(attraction);
         } else {
             attractionDAO.add(attraction);
         }
